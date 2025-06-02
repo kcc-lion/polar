@@ -1,14 +1,28 @@
 # PoLAR: Polar-Decomposed Low-Rank Adapter Representation
 
-This is the codebase for PoLAR, a method for parameter-efficient fine-tuning of LLMs.
+This is the codebase for PoLAR, a method for parameter-efficient fine-tuning of LLMs that **resolves the rank inefficiency encountered in LoRA** and **boosts performance on downstream tasks for model sizes up to and including 30B.**
 
 ## TL;DR
 
-We propose PoLAR, a polar-decomposition-inspired reparameterization, for fine-tuning LLMs in a parameter-efficient fashion. PoLAR (i) mitigates the low stable rank commonly observed in LoRA, (ii) provably accelerates convergence on a canonical LoRA problem, and (iii) improves accuracy on real-world tasks.
+We propose PoLAR, a polar-decomposition-inspired reparameterization, for fine-tuning LLMs in a parameter-efficient fashion. PoLAR (i) mitigates the low stable rank observed in LoRA, (ii) provably accelerates convergence on a canonical LoRA problem, and (iii) improves accuracy on real-world tasks.
 
-LoRA often does not fully exploit the low-rank subspace, leading to a low effective (stable) rank. This motivating finding occurrs across several datasets and a minimal reproducible example of it is given in the `notebooks/lora_low_effective_rank.ipynb` notebook which can be imported to and executed on https://colab.research.google.com/. This notebook evaluates the stable rank of the official LoRA DeBERTa XXL checkpoints.
+### LoRA Suffers from Rank Inefficiency
+
+LoRA often does not fully exploit the low-rank subspace, leading to a low effective (stable) rank. In particular, even if the rank of LoRA is chosen as `r=32` or `r=16`, the stable rank of $\Delta W = BA$ is often close to 1; see an example of applying LoRA on LLaMA2-7B in the figure below. In informal terms, **LoRA only leverages a rank 1 subspace**. 
+
+This motivating finding occurrs across several datasets and a minimal reproducible example of it is given in the `notebooks/lora_low_effective_rank.ipynb` notebook which evaluates the stable rank of the official LoRA DeBERTa XXL checkpoints.
 
 ![Low Directional Diversity](assets/low-sr.svg)
+
+### How Does PoLAR Address the Rank Inefficiency?
+
+PoLAR is a polar-decomposition-inspired reparameterization of LoRA. In particular, we introduce direction matrices $X$ and $Y$ with orthonormal columns (i.e., $X$ and $Y$ live in Stiefel manifolds), and an unconstrained scale matrix $\Theta$. The low-rank
+update is then formulated as $\Delta W = X \Theta Y^\top$. Matrices $X$ and $Y$ are optimized 
+using tools from Riemannian optimization. 
+
+Such a co-design of architecture and optimizer significantly improves the stable rank in low-rank adaptation. This is illustrated in the figure below: PoLAR's stable rank varies with `r` and increases throughout training.
+
+![Low Directional Diversity](assets/sr-evolution.svg)
 
 ## Setup and Dependencies
 

@@ -1,8 +1,6 @@
 import datetime
 import json
 import os
-
-# import matplotlib_inline.backend_inline
 from functools import partial
 
 import fire
@@ -20,21 +18,13 @@ from peft import PeftConfig, PeftModel
 from peft.tuners import lora
 from peft.tuners.polar.layer import PoLARLinear
 
-# matplotlib_inline.backend_inline.set_matplotlib_formats("svg", "pdf")
-
 
 def get_pairwise_dist_heatmap(W, save_path=None, title=None):
-    # W = W.to(torch.float64)
     W_tilde = W / torch.norm(W, p=2, dim=1, keepdim=True)
     condensed_distances = torch.nn.functional.pdist(W_tilde.detach().cpu()).numpy()
-
-    # get clustering. linkage matrix represents dendrogram
     linkage_matrix = hierarchy.linkage(condensed_distances, method="average")
-
-    # leaves_order represents mapping between indices and leaves in dendrogram
     leaves_order = hierarchy.leaves_list(linkage_matrix)
     distances = squareform(condensed_distances)
-    # reorder rows and columns according to clusters
     reordered_matrix = distances[leaves_order, :][:, leaves_order]
 
     plt.imshow(reordered_matrix, vmin=0.0, vmax=2.0)
