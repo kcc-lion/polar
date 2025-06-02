@@ -1,7 +1,7 @@
 # PoLAR: Polar-Decomposed Low-Rank Adapter Representation
 
 
-This repo hosts PoLAR, a polar-decomposition-inspired reparameterization, for parameter-efficient fine-tuning of LLMs. PoLAR (i) **resolves the rank inefficiency encountered in LoRA**, (ii) provably accelerates convergence on a canonical LoRA problem, and (iii) **boosts performance on downstream tasks for model sizes up to and including 30B.**
+This repo hosts PoLAR, a polar-decomposition-inspired reparameterization for fine-tuning LLMs in a parameter-efficient fashion. PoLAR (i) **resolves the rank inefficiency encountered in LoRA**, (ii) provably accelerates convergence on a canonical LoRA problem, and (iii) **boosts performance on downstream tasks for model sizes up to and including 30B.**
 
 ### LoRA Suffers from Rank Inefficiency
 
