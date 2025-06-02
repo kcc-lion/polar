@@ -1,0 +1,17 @@
+group: hendrycks_math
+task:
+  - hendrycks_math_algebra
+  - hendrycks_math_counting_and_prob
+  - hendrycks_math_geometry
+  - hendrycks_math_intermediate_algebra
+  - hendrycks_math_num_theory
+  - hendrycks_math_prealgebra
+  - hendrycks_math_precalc
+doc_to_text: "Below is an instruction that describes a task. Write a response that appropriately completes the request.\n\n### Instruction:\n{{problem}}\n\n### Response:\n"
+#doc_to_target: "{{answer}}" #" {{answer.split('### ')[-1].rstrip()}}"
+aggregate_metric_list:
+  - metric: exact_match
+    aggregation: mean
+    weight_by_size: true
+metadata:
+  version: 1.0
