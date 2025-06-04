@@ -1,7 +1,7 @@
 # PoLAR: Polar-Decomposed Low-Rank Adapter Representation
 
 
-This repo hosts PoLAR, a polar-decomposition-inspired reparameterization for fine-tuning LLMs in a parameter-efficient fashion. PoLAR **resolves the rank inefficiency encountered in LoRA** and **boosts performance on downstream tasks for model sizes up to and including 30B.**
+This repo hosts PoLAR, a polar-decomposition-inspired reparameterization for fine-tuning LLMs in a parameter-efficient fashion. PoLAR **resolves the rank inefficiency encountered in LoRA** and **boosts performance on downstream tasks for model sizes up to and including 30B.** The paper is available at https://arxiv.org/abs/2506.03133.
 
 ### LoRA Suffers from Rank Inefficiency
 
@@ -129,9 +129,22 @@ We require an editable install of lm-evaluation-harness due to the following:
 ### Other
 * The registration of the parameterization was used for research purposes only and can be disabled in practical scenarios to increase runtime efficiency. The appropriate line to comment out is line 119 in `peft/src/peft/tuners/polar/layer.py`.
 
-## Credits
+### Credits
 
 * The `finetune_commonsense.py` script is originally adapted from https://github.com/tloen/alpaca-lora/blob/main/finetune.py.
 * The lm-evaluation-harness is taken from https://github.com/EleutherAI/lm-evaluation-harness.
 * The editable PEFT version is based on v0.14.1.dev0 of https://github.com/huggingface/peft.
 * The `run_glue.py` script is adapted from https://github.com/huggingface/transformers/blob/main/examples/pytorch/text-classification/run_glue.py.
+
+### Citation
+
+```
+@misc{lion_polar_2025,
+	title = {{PoLAR}: {Polar}-{Decomposed} {Low}-{Rank} {Adapter} {Representation}},
+	shorttitle = {{PoLAR}},
+	url = {https://arxiv.org/abs/2506.03133},
+	journal = {arXiv.org},
+	author = {Lion, Kai and Zhang, Liang and Li, Bingcong and He, Niao},
+	year = {2025},
+}
+```
